@@ -1,7 +1,7 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
-  "pluginType": "platform",
-  "singular": true,
+  "pluginAlias": "GarageDoor",
+  "pluginType": "accessory",
+  "singular": false,
   "schema": {
     "type": "object",
     "properties": {
@@ -9,7 +9,13 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "Example Dynamic Platform"
+        "default": "Garage Door"
+      },
+      "url": {
+        "title": "Url",
+        "type": "string",
+        "required": true,
+        "default": "https://6aca669b-5d5a-4616-a655-1fd7cd7374a7.mock.pstmn.io"
       }
     }
   }
