@@ -4,7 +4,7 @@ var Characteristic;
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-  homebridge.registerAccessory('homebridge-garage-door', 'GarageCommand', GarageCmdAccessory);
+  homebridge.registerAccessory('homebridge-garage-door', 'GarageDoor', GarageCmdAccessory);
 };
 
 function GarageCmdAccessory(log, config) {
