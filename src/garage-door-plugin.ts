@@ -67,7 +67,9 @@ class GarageDoorAccessory {
 
         this.timeout = setTimeout(() => {
             this.handleDoorState((state) => {
-                this.garageService.getCharacteristic(hap.Characteristic.TargetDoorState).setValue(state, undefined, 'pollState');
+                if (state === hap.Characteristic.CurrentDoorState.OPEN || state === hap.Characteristic.CurrentDoorState.CLOSED) {
+                    this.garageService.getCharacteristic(hap.Characteristic.TargetDoorState).setValue(state, undefined, 'pollState');
+                }
                 this.garageService.setCharacteristic(hap.Characteristic.CurrentDoorState, state);
             })
         }, 3000)
