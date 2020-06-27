@@ -16,13 +16,6 @@
     "node": ">=10.17.0",
     "homebridge": ">0.4.53"
   },
-  "main": "dist/garage-door-plugin.js",
-  "scripts": {
-    "lint": "eslint src/**.ts",
-    "watch": "npm run build && npm link && nodemon",
-    "build": "rimraf ./dist && tsc",
-    "prepublishOnly": "npm run lint && npm run build"
-  },
   "keywords": [
     "homebridge-plugin"
   ],
