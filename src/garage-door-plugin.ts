@@ -50,10 +50,10 @@ class GarageDoorAccessory {
      */
     handleDoorState(callback) {
 
-        this.log.debug('Triggered GET TargetDoorState:');
+        this.log.debug('Triggered GET TargetDoorState:' + hap.Characteristic.CurrentDoorState.OPEN);
         const axios = require('axios').default;
         axios.get(`${this.url}/status`).then(r => {
-            callback(r.data.status == 'open' ? hap.Characteristic.CurrentDoorState.OPEN : hap.Characteristic.CurrentDoorState.CLOSED);
+            callback(null, r.data == 'open' ? hap.Characteristic.CurrentDoorState.OPEN : hap.Characteristic.CurrentDoorState.CLOSED);
         });
 
         this.pollDoorState();
@@ -85,8 +85,22 @@ class GarageDoorAccessory {
         this.log.debug('Triggered SET TargetDoorState:' + value);
 
         const axios = require('axios').default;
-        axios.post(`${this.url}/${value ? 'close' : 'open'}`).then(r => {
-            callback(r.status == 'open' ? hap.Characteristic.CurrentDoorState.OPEN : hap.Characteristic.CurrentDoorState.CLOSED);
+        axios.post(`${this.url}/toggle`).then(r => {
+            if (value == 'open') {
+                this.garageService.setCharacteristic(hap.Characteristic.CurrentDoorState, hap.Characteristic.CurrentDoorState.OPENING);
+                setTimeout(() =>
+                    this.garageService.setCharacteristic(hap.Characteristic.CurrentDoorState, hap.Characteristic.CurrentDoorState.OPEN)
+                 ,
+                  3000
+                );
+              } else {
+                this.garageService.setCharacteristic(hap.Characteristic.CurrentDoorState, hap.Characteristic.CurrentDoorState.CLOSING);
+                setTimeout(() =>
+                    this.garageService.setCharacteristic(hap.Characteristic.CurrentDoorState, hap.Characteristic.CurrentDoorState.CLOSED)
+                  ,
+                  3000
+                );
+              }
         });
     }
 
